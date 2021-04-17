@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Minimal CPS counter</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+			* {
+				font-family: helvetica, arial, sans-serif;
+				box-sizing: border-box;
+				user-select: none;
+			}
+
+			header {
+				/* Positioning children */
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				gap: 1em;
+			}
+
+			.click-box {
+				background: #afb9be;
+
+				/* Positioning */
+				height: 400px;
+				width: 400px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+
+				/* Text */
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 3rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<p id="totalClicks">Total times clicked: 0</p>
+			<p id="topClicks">Top CPS: 0</p>
+		</header>
+		<div class="click-box" id="clickTarget">0 CPS</div>
+
+		<!-- Script to run after DOM is loaded -->
+		<script>
+			const totalClicksElement = document.getElementById('totalClicks');
+			const topCPSElement      = document.getElementById('topClicks');
+			const cpsElement         = document.getElementById('clickTarget');
+
+			let clicks      = [];
+			let totalClicks = 0;
+			let lastLength  = 0;
+			let topCPS      = 0;
+
+			// Event listeners
+			// Obviosly we update every time there's a click, but we also update
+			// every 100th millisecond to make sure we see the value tricle down.
+			cpsElement.addEventListener('click', boxClicked);
+			animationInterval(100, render);
+
+			function boxClicked(e) {
+				clicks.push(e.timeStamp);
+				render();
+				
+				totalClicksElement.innerText = `Total times clicked: ${++totalClicks}`;
+			}
+
+			function render() {
+				// Remove clicks that are too old
+				const now = performance.now();
+				clicks = clicks.filter(t => now - t < 1000);
+
+				const cps = clicks.length;
+				if (cps !== lastLength)
+					cpsElement.innerText = `${cps} CPS`;
+				if (cps > topCPS)
+					topCPSElement.innerText = `Top CPS: ${topCPS = cps}`;
+
+				lastLength = cps;
+			}
+
+			// Better timing function
+			// https://gist.github.com/jakearchibald/cb03f15670817001b1157e62a076fe95
+			function animationInterval(ms, callback) {
+				const start = document.timeline ? document.timeline.currentTime : performance.now();
+
+				function frame(time) {
+					callback(time);
+					scheduleFrame(time);
+				}
+
+				function scheduleFrame(time) {
+					const elapsed = time - start;
+					const roundedElapsed = Math.round(elapsed / ms) * ms;
+					const targetNext = start + roundedElapsed + ms;
+					const delay = targetNext - performance.now();
+					setTimeout(() => requestAnimationFrame(frame), delay);
+				}
+
+				scheduleFrame(start);
+			}
+		</script>
+	</body>
+</html>
