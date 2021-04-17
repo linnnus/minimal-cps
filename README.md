@@ -9,4 +9,3 @@ wack, my point still stands.
 
 ## TODO
 * Better cross-browser compatibility
-* Count right clicks?
