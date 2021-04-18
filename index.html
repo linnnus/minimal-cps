@@ -71,7 +71,7 @@
 				clicks.push(e.timeStamp);
 				render();
 				
-				totalClicksElement.innerText = `Total times clicked: ${++totalClicks}`;
+				totalClicksElement.textContent = `Total times clicked: ${++totalClicks}`;
 			}
 
 			function render() {
@@ -81,9 +81,9 @@
 
 				const cps = clicks.length;
 				if (cps !== lastLength)
-					cpsElement.innerText = `${cps} CPS`;
+					cpsElement.textContent = `${cps} CPS`;
 				if (cps > topCPS)
-					topCPSElement.innerText = `Top CPS: ${topCPS = cps}`;
+					topCPSElement.textContent = `Top CPS: ${topCPS = cps}`;
 
 				lastLength = cps;
 			}
