@@ -58,14 +58,14 @@
 			let topCPS      = 0;
 
 			// Event listeners
-			// Obviosly we update every time there's a click, but we also update
+			// Obviously, we update every time there's a click, but we also update
 			// every 100th millisecond to make sure we see the value trickle down.
 			cpsElement.addEventListener('click',       boxClicked);
 			cpsElement.addEventListener('contextmenu', boxClicked);
 			animationInterval(100, render);
 
 			function boxClicked(e) {
-				// Prevent creation of contextmenu (on right-click)
+				// Prevent creation of contextmenu on right-click
 				e.preventDefault();
 
 				clicks.push(e.timeStamp);
