@@ -20,12 +20,16 @@
 				gap: 1em;
 			}
 
+			header > * { z-index: 10; }
+
 			.click-target {
 				background: #afb9be;
 
 				/* Positioning */
 				height: 400px;
 				width: 400px;
+				/*height: 80vh;
+				width: 80vw;*/
 				position: absolute;
 				top: 50%;
 				left: 50%;
@@ -36,6 +40,14 @@
 				justify-content: center;
 				align-items: center;
 				font-size: 3rem;
+			}
+
+			/* mobile; take up entire screen */
+			@media screen and (max-width: 600px) {
+				.click-target {
+					width: 100vw;
+					height: 100vh;
+				}
 			}
 		</style>
 	</head>
