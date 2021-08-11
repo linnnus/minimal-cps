@@ -11,3 +11,5 @@ behaviour is wack, my point still stands.
 * Better cross-browser compatibility.
 * I'm a little worried about performance but I don't really know how
   we could improve it or if it even poses a problem.
+
+<!-- vim set:ft=markdown:et:ts=2:ff=unix: -->
