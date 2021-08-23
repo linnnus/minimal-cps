@@ -1,4 +1,4 @@
-# Minimal CPS counter
+# Minimal CPS
 This CPS counter was made out of spite, to prove a point. No CPS
 counter needs a fucking ripple effect and yet that is exactly what you
 will find on the top sites. This site doesn't do that.
